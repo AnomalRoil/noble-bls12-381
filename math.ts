@@ -224,6 +224,23 @@ export class Fp implements Field<Fp> {
     const str = this.value.toString(16).padStart(96, '0');
     return str.slice(0, 2) + '.' + str.slice(-2);
   }
+
+  toBytes(): Uint8Array {
+    var hex = BigInt(this.value).toString(16).padStart(96, '0');
+    var len = hex.length / 2;
+    var u8 = new Uint8Array(len);
+
+    var i = 0;
+    var j = 0;
+    while (i < len) {
+      u8[i] = parseInt(hex.slice(j, j+2), 16);
+      i += 1;
+      j += 2;
+    }
+
+    return u8;
+  }
+
 }
 
 // Finite field over r.
